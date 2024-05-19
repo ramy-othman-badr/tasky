@@ -1,0 +1,35 @@
+.no-connection {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+
+  img {
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
+
+  p {
+    color: gray;
+    font-size: 0.9rem;
+
+    span {
+      color: #f05234;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+  }
+}
+
+.reload-btn {
+  margin-top: 25px;
+
+  ion-button {}
+}

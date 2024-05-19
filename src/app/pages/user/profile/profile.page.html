@@ -1,0 +1,69 @@
+<ion-content>
+  <ion-header class="ion-no-border themed-header">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button class="custom-back-button" (click)="initService.navCtrl.pop()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M13.165 11.9934L13.1634 11.6393C13.1513 10.2348 13.0666 8.98174 12.9206 8.18763C12.9206 8.17331 12.7613 7.38572 12.6599 7.12355C12.5006 6.74463 12.2126 6.42299 11.8515 6.2192C11.5624 6.0738 11.2592 6 10.9417 6C10.6922 6.01157 10.2806 6.13714 9.98692 6.24242L9.74283 6.33596C8.12612 6.97815 5.03561 9.07656 3.85199 10.3598L3.76473 10.4495L3.37527 10.8698C3.12982 11.1915 3 11.5847 3 12.0077C3 12.3866 3.11563 12.7656 3.3469 13.0718C3.41614 13.171 3.52766 13.2983 3.62693 13.4058L4.006 13.8026C5.31046 15.1243 8.13485 16.9782 9.59883 17.5924C9.59883 17.6057 10.5086 17.9857 10.9417 18H10.9995C11.6639 18 12.2846 17.6211 12.6021 17.0086C12.6888 16.8412 12.772 16.5132 12.8352 16.2252L12.949 15.6813C13.0788 14.8067 13.165 13.465 13.165 11.9934ZM19.4967 13.5183C20.3269 13.5183 21 12.8387 21 12.0004C21 11.1622 20.3269 10.4825 19.4967 10.4825L15.7975 10.8097C15.1463 10.8097 14.6183 11.3417 14.6183 12.0004C14.6183 12.6581 15.1463 13.1912 15.7975 13.1912L19.4967 13.5183Z"
+              fill="#24252C" />
+          </svg>
+        </ion-button>
+      </ion-buttons>
+      <ion-title>Profile</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+
+  <div *ngIf="!loading" class="ion-padding main-container">
+    <ion-item lines="none">
+      <ion-label>
+        <h2>Name</h2>
+        <p>{{profileDetails.displayName}}</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-label>
+        <h2>Phone</h2>
+        <p>{{profileDetails.username}}</p>
+      </ion-label>
+      <ion-buttons slot="end">
+        <ion-button (click)="copyPhoneNumber()">
+          <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M16.5 2H12.5C9.67157 2 8.25736 2 7.37868 2.94627C6.5 3.89254 6.5 5.41554 6.5 8.46154V9.53846C6.5 12.5845 6.5 14.1075 7.37868 15.0537C8.25736 16 9.67157 16 12.5 16H16.5C19.3284 16 20.7426 16 21.6213 15.0537C22.5 14.1075 22.5 12.5845 22.5 9.53846V8.46154C22.5 5.41554 22.5 3.89254 21.6213 2.94627C20.7426 2 19.3284 2 16.5 2Z"
+              stroke="#5F33E1" stroke-width="1.5" />
+            <path
+              d="M18.5 16.6082C18.4879 18.9537 18.3914 20.2239 17.623 21.0525C16.7442 22 15.3298 22 12.5011 22H8.50065C5.67192 22 4.25755 22 3.37878 21.0525C2.5 20.1049 2.5 18.5799 2.5 15.5298V14.4515C2.5 11.4014 2.5 9.87638 3.37878 8.92885C4.02015 8.2373 4.94682 8.05047 6.50043 8"
+              stroke="#5F33E1" stroke-width="1.5" />
+          </svg>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-label>
+        <h2>Level</h2>
+        <p>{{profileDetails.level}}</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-label>
+        <h2>Years of experience</h2>
+        <p>{{profileDetails.experienceYears}}</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-label>
+        <h2>Location</h2>
+        <p>{{profileDetails.address}}</p>
+      </ion-label>
+    </ion-item>
+  </div>
+
+
+</ion-content>
+<app-loading *ngIf="loading"></app-loading>

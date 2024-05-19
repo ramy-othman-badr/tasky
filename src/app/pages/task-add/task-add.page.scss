@@ -1,0 +1,79 @@
+.overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 99;
+}
+
+.priority-select {
+    ion-item {
+        --background: #F0ECFF;
+        border: none;
+
+        .end-icon {
+            background: #F0ECFF !important;
+        }
+
+        .selected-priority {
+            display: flex;
+            align-items: center;
+
+            svg {
+                margin-inline-end: 15px;
+            }
+
+            p {
+                margin: 0px;
+                font-weight: 700;
+                color: #5F33E1;
+                font-size: .9rem;
+            }
+        }
+    }
+}
+
+.image {
+    border: 1px dashed #5F33E1;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 15px 0px;
+    position: relative;
+
+    .image-wrapper {
+        display: flex;
+        align-items: center;
+
+        svg {
+            margin-inline-end: 10px;
+        }
+
+        p {
+            margin: 0px;
+            font-size: 1rem;
+            color: #5F33E1;
+            font-weight: 700;
+        }
+    }
+
+    .selected-image {
+        width: calc(100% - 30px);
+        border-radius: 14px;
+        height: 150px;
+    }
+
+    .detete-file {
+        position: absolute;
+        top: 25px;
+        right: 25px;
+        z-index: 99;
+        --background: #fff;
+        --border-radius: 90px;
+        width: 48px;
+        height: 48px;
+    }
+}

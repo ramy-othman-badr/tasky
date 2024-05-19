@@ -1,0 +1,26 @@
+<ion-header class="ion-no-border themed-modal-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      <ion-text>Log out</ion-text>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+
+  <div class="main-container ion-padding">
+    <img src="assets/imgs/confirm.png" />
+    <h2>Do you want to log out?</h2>
+  </div>
+
+  <ion-footer class="ion-no-border">
+    <ion-button (click)="confirm()" expand="block" class="confirm-btn">
+      <ion-label>Confirm</ion-label>
+    </ion-button>
+  </ion-footer>
+
+</ion-content>

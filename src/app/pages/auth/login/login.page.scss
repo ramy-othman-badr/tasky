@@ -1,0 +1,49 @@
+.art-image {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+
+    img {
+        height: 100%;
+        width: 100%;
+    }
+}
+
+.main-container {
+    margin-top: 300px;
+
+}
+
+
+.page-title {
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.register-btn {
+    --background: transparent;
+    color: #a19999;
+    margin-top: 15px;
+
+    span {
+        margin-inline-start: 5px;
+        color: var(--ion-color-primary);
+        text-decoration: underline;
+        font-weight: 700;
+    }
+}
+
+.start-icon {
+    display: flex;
+    align-items: center;
+    .flag {
+        margin-inline-end: 5px;
+    }
+    span {
+        margin-inline-end: 5px;
+    }
+}
+
+.themed-form .form-item ion-item .start-icon {
+    padding-right: 0px !important;
+}

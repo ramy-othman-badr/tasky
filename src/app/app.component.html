@@ -1,3 +1,4 @@
 <ion-app>
   <ion-router-outlet></ion-router-outlet>
+  <app-connection *ngIf="initService.connection_lost"></app-connection>
 </ion-app>

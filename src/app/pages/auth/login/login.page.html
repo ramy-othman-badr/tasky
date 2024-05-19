@@ -1,0 +1,81 @@
+<ion-content [fullscreen]="true">
+
+  <div class="art-image">
+    <img src="assets/imgs/art.png">
+  </div>
+
+
+  <div class="main-container ion-padding">
+
+    <h2 class="page-title">Login</h2>
+
+    <form [formGroup]="loginForm" (ngSubmit)="login()" class="themed-form">
+
+      <div class="form-item phone-input">
+        <ion-item lines="none">
+          <span slot="start" class="start-icon">
+
+            <svg (click)="changeCountry()" class="flag" width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g clip-path="url(#clip0_3_227)">
+                <path d="M0.5 8.00159H24.5V15.9985H0.5V8.00159Z" fill="white" />
+                <path d="M0.5 0H24.5V8.00156H0.5V0Z" fill="#CE1126" />
+                <path d="M0.5 15.9984H24.5V24H0.5V15.9984Z" fill="black" />
+                <path
+                  d="M7.15467 14.314C7.25142 14.314 7.32986 14.2356 7.32986 14.1388C7.32986 14.0421 7.25142 13.9636 7.15467 13.9636C7.05792 13.9636 6.97949 14.0421 6.97949 14.1388C6.97949 14.2356 7.05792 14.314 7.15467 14.314Z"
+                  fill="#007A3D" />
+              </g>
+              <defs>
+                <clipPath id="clip0_3_227">
+                  <rect x="0.5" width="24" height="24" rx="8" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+
+            <span (click)="changeCountry()">+20</span>
+
+            <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6.5 9L12.5 15L18.5 9" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+
+          </span>
+          <ion-input type="tel" formControlName="phone" clearOnEdit="false" #phone (keyup.enter)="setNextFocus('phone')"
+            placeholder="123 456-7890"></ion-input>
+        </ion-item>
+        <p class="error-msg" *ngIf="loginForm.get('phone').touched && loginForm.get('phone').hasError('required')">
+          Phone number is invalid
+        </p>
+      </div>
+
+      <div class="form-item">
+        <ion-item lines="none">
+          <ion-input type="password" formControlName="password" #password (keyup.enter)="setNextFocus('password')"
+            clearOnEdit="false" placeholder="Password..." *ngIf="!showPassword"></ion-input>
+
+          <ion-input type="text" formControlName="password" #password (keyup.enter)="setNextFocus('confirm_password')"
+            clearOnEdit="false" placeholder="Password..." *ngIf="showPassword"></ion-input>
+
+          <span class="eye-icon">
+            <svg (click)="togglePassword()" width="25" height="24" viewBox="0 0 25 24" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path d="M2.5 12C2.5 12 5.5 5 12.5 5C19.5 5 22.5 12 22.5 12C22.5 12 19.5 19 12.5 19C5.5 19 2.5 12 2.5 12Z"
+                stroke="#BABABA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path
+                d="M12.5 15C14.1569 15 15.5 13.6569 15.5 12C15.5 10.3431 14.1569 9 12.5 9C10.8431 9 9.5 10.3431 9.5 12C9.5 13.6569 10.8431 15 12.5 15Z"
+                stroke="#BABABA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </span>
+        </ion-item>
+        <p class="error-msg"
+          *ngIf="loginForm.get('password').touched && loginForm.get('password').hasError('required')">
+          Password is required
+        </p>
+      </div>
+
+      <ion-button expand="block" class="primary-button" type="submit" [disabled]="!loginForm.valid">Sign In</ion-button>
+      <ion-button class="register-btn" expand="block" (click)="register()">
+        Didn’t have any account? <span>Sign Up here</span>
+      </ion-button>
+    </form>
+  </div>
+</ion-content>

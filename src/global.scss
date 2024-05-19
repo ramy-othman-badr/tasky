@@ -25,13 +25,146 @@
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
-/**
- * Ionic Dark Mode
- * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
- */
 
-/* @import "@ionic/angular/css/palettes/dark.always.css"; */
-/* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import "@ionic/angular/css/palettes/dark.system.css";
+
+@font-face {
+    font-family: "Cairo-Medium";
+    src: url("./assets/fonts/Cairo-Medium.ttf");
+}
+
+ion-back-button {
+    display: block;
+}
+
+
+
+h2,
+p,
+ion-label,
+ion-button {
+    font-family: "Cairo-Medium" !important;
+}
+
+
+ion-button {
+    --border-radius: 14px;
+    height: 56px;
+    text-transform: initial;
+    --box-shadow: none;
+}
+
+.loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.themed-header {
+    .custom-back-button {}
+
+    ion-title {
+        padding: 0;
+    }
+}
+
+
+.themed-form {
+    .form-item {
+        margin-top: 20px;
+
+        &:first-child {
+            margin-top: 0px !important;
+        }
+
+        ion-label {
+            margin-bottom: 5px;
+            display: block;
+            color: #6E6A7C;
+            font-size: .9rem;
+        }
+
+        ion-item {
+            border: 1px solid #BABABA;
+            border-radius: 14px;
+            --padding-start: 15px !important;
+            --padding-end: 15px !important;
+
+            .start-icon {
+                margin-inline-end: 10px;
+                padding-right: 10px;
+
+                svg {}
+            }
+
+            ion-input {}
+
+            .end-icon {
+                margin-inline-start: 10px;
+                padding-left: 10px;
+                position: absolute;
+                right: 0px;
+                background: #FFF;
+                z-index: 99;
+                padding-inline-start: 5px;
+
+                svg {}
+            }
+
+            .eye-icon {
+                svg {
+                    position: absolute;
+                    right: 0px;
+                    z-index: 99;
+                    background: #FFF;
+                    padding-inline-start: 10px;
+                    top: 50%;
+                    transform: translate(0, -50%);
+                    width: 36px;
+
+                    svg,
+                    svg path {}
+                }
+            }
+        }
+
+        .error-msg {
+            margin: 0px;
+            line-height: 1.5;
+            font-size: 0.8rem;
+            color: var(--ion-color-danger);
+            margin-top: 6px;
+        }
+
+    }
+
+    .primary-button {
+        margin-top: 20px;
+        --background: #5F33E1;
+    }
+}
+
+.list-select-modal {
+    --height: 600px;
+}
+
+.experience-level-modal {
+    --height: 370px;
+}
+
+.priority-modal {
+    --height: 320px;
+}
+
+.toast-msg,
+.loading-msg {
+    font-family: "Cairo-Medium" !important;
+    line-height: 1.7 !important;
+}
+
+.logout-modal {
+    --height: 724px;
+}
+.select-status-modal {
+    --height: 320px;
+}

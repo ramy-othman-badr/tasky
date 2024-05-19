@@ -1,0 +1,40 @@
+.art-image {
+    img {
+        object-fit: none;
+    }
+}
+
+.info-details {
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    bottom: 50px;
+
+    h2 {
+        font-size: 1.6rem;
+        margin: 0px;
+        font-weight: 700;
+        line-height: 1.5;
+        margin-bottom: 20px;
+    }
+
+    p {
+        color: #6E6A7C !important;
+        margin: 0px;
+    }
+
+    .btn-info {
+        margin-top: 40px;
+
+        ion-button {
+            ion-label {
+                font-size: 1.2rem;
+                font-weight: 700;
+
+                svg {
+                    margin-inline-start: 10px;
+                }
+            }
+        }
+    }
+}

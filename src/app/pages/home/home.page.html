@@ -1,0 +1,198 @@
+<ion-content>
+
+  <ion-header class="ion-no-border">
+    <ion-toolbar>
+      <ion-title>Logo</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="openPage('profile')">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+              stroke="black" stroke-width="1.5" />
+            <path
+              d="M7.5 17C9.8317 14.5578 14.1432 14.4428 16.5 17M14.4951 9.5C14.4951 10.8807 13.3742 12 11.9915 12C10.6089 12 9.48797 10.8807 9.48797 9.5C9.48797 8.11929 10.6089 7 11.9915 7C13.3742 7 14.4951 8.11929 14.4951 9.5Z"
+              stroke="black" stroke-width="1.5" stroke-linecap="round" />
+          </svg>
+        </ion-button>
+
+        <ion-button (click)="logout()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9"
+              stroke="#5F33E1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M16 17L21 12L16 7" stroke="#5F33E1" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M21 12H9" stroke="#5F33E1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+    <ion-toolbar style="padding: 15px;">
+      <div class="segments-section">
+        <h2>My Tasks</h2>
+        <ion-segment scrollable [(ngModel)]="segment_value" (ionChange)="segmentsChange()">
+          <ion-segment-button *ngFor="let item of segments" [value]="item.id">
+            <ion-label>{{item.name}}</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </div>
+    </ion-toolbar>
+  </ion-header>
+
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content refreshingSpinner="circles">
+    </ion-refresher-content>
+  </ion-refresher>
+
+
+  <div class="ion-padding main-container">
+
+    <!-- loading section -->
+    <div *ngIf="loading" class="loading-section">
+      <ion-row>
+        <ion-col size="12" sizeMd="12" sizeLg="6" *ngFor="let item of loading_array">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-col>
+      </ion-row>
+    </div>
+    <!-- loading section -->
+
+
+    <!-- data after loading -->
+    <div *ngIf="!loading" class="data-list-section">
+
+      <!-- no items -->
+      <div class="no-items" *ngIf="items.length == 0">
+        <img src="assets/imgs/no-items.png">
+        <h2>No items</h2>
+      </div>
+      <!-- no items -->
+
+
+      <!-- items list -->
+      <div class="data-list" *ngIf="items.length != 0">
+
+        <ion-row>
+          <ion-col size="12" sizeMd="12" sizeLg="6" *ngFor="let item of items">
+            <ion-item lines="none" (click)="openTask(item._id)">
+              <ion-avatar slot="start">
+                <img [src]="initService.httpService.images_url + item.image">
+              </ion-avatar>
+              <ion-label>
+                <div class="task-top-details">
+                  <h2 class="task-title">{{truncateString(item.title, 50)}}</h2>
+                  <p class="task-status"
+                    [ngClass]="{'waiting': item.status == 'waiting', 'inProgress': item.status == 'inProgress', 'finished': item.status == 'finished'}">
+                    {{item.status}}</p>
+                </div>
+                <p class="task-desc">{{truncateString(item.desc, 50)}}</p>
+                <ion-row>
+                  <ion-col size="6"
+                    [ngClass]="{'low-priority': item.priority == 'low', 'medium-priority': item.priority == 'medium', 'high-priority': item.priority == 'high'}">
+
+                    <svg *ngIf="item.priority == 'low'" width="16" height="16" viewBox="0 0 16 16" fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M2.66669 9.99998C2.66669 9.99998 3.33335 9.33331 5.33335 9.33331C7.33335 9.33331 8.66669 10.6666 10.6667 10.6666C12.6667 10.6666 13.3334 9.99998 13.3334 9.99998V1.99998C13.3334 1.99998 12.6667 2.66665 10.6667 2.66665C8.66669 2.66665 7.33335 1.33331 5.33335 1.33331C3.33335 1.33331 2.66669 1.99998 2.66669 1.99998V9.99998Z"
+                        stroke="#5F33E1" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M2.66669 14.6667V10" stroke="#5F33E1" stroke-width="1.33333" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    </svg>
+
+                    <svg *ngIf="item.priority == 'medium'" width="16" height="16" viewBox="0 0 16 16" fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M2.66669 9.99998C2.66669 9.99998 3.33335 9.33331 5.33335 9.33331C7.33335 9.33331 8.66669 10.6666 10.6667 10.6666C12.6667 10.6666 13.3334 9.99998 13.3334 9.99998V1.99998C13.3334 1.99998 12.6667 2.66665 10.6667 2.66665C8.66669 2.66665 7.33335 1.33331 5.33335 1.33331C3.33335 1.33331 2.66669 1.99998 2.66669 1.99998V9.99998Z"
+                        stroke="#0087FF" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M2.66669 14.6667V10" stroke="#0087FF" stroke-width="1.33333" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    </svg>
+
+                    <svg *ngIf="item.priority == 'high'" width="16" height="16" viewBox="0 0 16 16" fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M2.66669 9.99998C2.66669 9.99998 3.33335 9.33331 5.33335 9.33331C7.33335 9.33331 8.66669 10.6666 10.6667 10.6666C12.6667 10.6666 13.3334 9.99998 13.3334 9.99998V1.99998C13.3334 1.99998 12.6667 2.66665 10.6667 2.66665C8.66669 2.66665 7.33335 1.33331 5.33335 1.33331C3.33335 1.33331 2.66669 1.99998 2.66669 1.99998V9.99998Z"
+                        stroke="#FF7D53" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M2.66669 14.6667V10" stroke="#FF7D53" stroke-width="1.33333" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    </svg>
+
+                    <p class="task-priority">
+                      {{item.priority}}</p>
+                  </ion-col>
+                  <ion-col size="6" class="task-date">
+                    <p>{{item.createdAt | date}}</p>
+                  </ion-col>
+                </ion-row>
+              </ion-label>
+              <ion-buttons slot="end">
+                <ion-button  (click)="taskOptions(item, $event)">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13Z"
+                      stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path
+                      d="M12 6C12.5523 6 13 5.55228 13 5C13 4.44772 12.5523 4 12 4C11.4477 4 11 4.44772 11 5C11 5.55228 11.4477 6 12 6Z"
+                      stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path
+                      d="M12 20C12.5523 20 13 19.5523 13 19C13 18.4477 12.5523 18 12 18C11.4477 18 11 18.4477 11 19C11 19.5523 11.4477 20 12 20Z"
+                      stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </ion-button>
+              </ion-buttons>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-infinite-scroll threshold="200px" (ionInfinite)="doInfinite($event)">
+          <ion-infinite-scroll-content> </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+
+      </div>
+      <!-- items list -->
+
+
+    </div>
+    <!-- data after loading -->
+
+
+
+  </div>
+
+
+</ion-content>
+
+<div class="footer-buttons">
+  <div class="qrcode-btn">
+    <ion-button (click)="scanQRCode()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M3 6C3 4.58579 3 3.87868 3.43934 3.43934C3.87868 3 4.58579 3 6 3C7.41421 3 8.12132 3 8.56066 3.43934C9 3.87868 9 4.58579 9 6C9 7.41421 9 8.12132 8.56066 8.56066C8.12132 9 7.41421 9 6 9C4.58579 9 3.87868 9 3.43934 8.56066C3 8.12132 3 7.41421 3 6Z"
+          stroke="#5F33E1" stroke-width="1.5" />
+        <path
+          d="M3 18C3 16.5858 3 15.8787 3.43934 15.4393C3.87868 15 4.58579 15 6 15C7.41421 15 8.12132 15 8.56066 15.4393C9 15.8787 9 16.5858 9 18C9 19.4142 9 20.1213 8.56066 20.5607C8.12132 21 7.41421 21 6 21C4.58579 21 3.87868 21 3.43934 20.5607C3 20.1213 3 19.4142 3 18Z"
+          stroke="#5F33E1" stroke-width="1.5" />
+        <path d="M3 12H9" stroke="#5F33E1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M12 3V8" stroke="#5F33E1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        <path
+          d="M15 6C15 4.58579 15 3.87868 15.4393 3.43934C15.8787 3 16.5858 3 18 3C19.4142 3 20.1213 3 20.5607 3.43934C21 3.87868 21 4.58579 21 6C21 7.41421 21 8.12132 20.5607 8.56066C20.1213 9 19.4142 9 18 9C16.5858 9 15.8787 9 15.4393 8.56066C15 8.12132 15 7.41421 15 6Z"
+          stroke="#5F33E1" stroke-width="1.5" />
+        <path
+          d="M21 12H15C13.5858 12 12.8787 12 12.4393 12.4393C12 12.8787 12 13.5858 12 15M12 17.7692V20.5385M15 15V16.5C15 17.9464 15.7837 18 17 18C17.5523 18 18 18.4477 18 19M16 21H15M18 15C19.4142 15 20.1213 15 20.5607 15.44C21 15.8799 21 16.5881 21 18.0043C21 19.4206 21 20.1287 20.5607 20.5687C20.24 20.8898 19.7767 20.9766 19 21"
+          stroke="#5F33E1" stroke-width="1.5" stroke-linecap="round" />
+      </svg>
+    </ion-button>
+  </div>
+
+  <div class="task-add-btn">
+    <ion-button (click)="addTask()">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6.66669 16H25.3334" stroke="white" stroke-width="2.66667" stroke-linecap="round"
+          stroke-linejoin="round" />
+        <path d="M16 6.66669V25.3334" stroke="white" stroke-width="2.66667" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
+    </ion-button>
+  </div>
+</div>

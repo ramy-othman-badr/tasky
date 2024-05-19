@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'tasky',
+  appId: 'com.ramyothman.tasky',
+  appName: 'Tasky',
   webDir: 'www'
 };
 

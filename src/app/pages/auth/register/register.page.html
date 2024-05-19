@@ -1,0 +1,149 @@
+<ion-content [fullscreen]="true">
+  <ion-header class="ion-no-border themed-header">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button class="custom-back-button" (click)="initService.navCtrl.pop()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M13.165 11.9934L13.1634 11.6393C13.1513 10.2348 13.0666 8.98174 12.9206 8.18763C12.9206 8.17331 12.7613 7.38572 12.6599 7.12355C12.5006 6.74463 12.2126 6.42299 11.8515 6.2192C11.5624 6.0738 11.2592 6 10.9417 6C10.6922 6.01157 10.2806 6.13714 9.98692 6.24242L9.74283 6.33596C8.12612 6.97815 5.03561 9.07656 3.85199 10.3598L3.76473 10.4495L3.37527 10.8698C3.12982 11.1915 3 11.5847 3 12.0077C3 12.3866 3.11563 12.7656 3.3469 13.0718C3.41614 13.171 3.52766 13.2983 3.62693 13.4058L4.006 13.8026C5.31046 15.1243 8.13485 16.9782 9.59883 17.5924C9.59883 17.6057 10.5086 17.9857 10.9417 18H10.9995C11.6639 18 12.2846 17.6211 12.6021 17.0086C12.6888 16.8412 12.772 16.5132 12.8352 16.2252L12.949 15.6813C13.0788 14.8067 13.165 13.465 13.165 11.9934ZM19.4967 13.5183C20.3269 13.5183 21 12.8387 21 12.0004C21 11.1622 20.3269 10.4825 19.4967 10.4825L15.7975 10.8097C15.1463 10.8097 14.6183 11.3417 14.6183 12.0004C14.6183 12.6581 15.1463 13.1912 15.7975 13.1912L19.4967 13.5183Z"
+              fill="#24252C" />
+          </svg>
+        </ion-button>
+      </ion-buttons>
+      <ion-title></ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+
+  <div class="art-image">
+    <img src="assets/imgs/register-bg.png">
+  </div>
+
+
+  <div class="main-container ion-padding">
+
+    <h2 class="page-title">Create Account</h2>
+
+    <form [formGroup]="registerForm" (ngSubmit)="register()" class="themed-form">
+
+
+      <div class="form-item">
+        <ion-item lines="none">
+          <ion-input type="text" formControlName="displayName" clearOnEdit="false" #displayName
+            (keyup.enter)="setNextFocus('displayName')" placeholder="Name..."></ion-input>
+        </ion-item>
+        <p class="error-msg"
+          *ngIf="registerForm.get('displayName').touched && registerForm.get('displayName').hasError('required')">
+          Name is required
+        </p>
+      </div>
+
+
+      <div class="form-item phone-input">
+        <ion-item lines="none">
+          <span slot="start" class="start-icon">
+
+            <svg (click)="changeCountry()" class="flag" width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g clip-path="url(#clip0_3_227)">
+                <path d="M0.5 8.00159H24.5V15.9985H0.5V8.00159Z" fill="white" />
+                <path d="M0.5 0H24.5V8.00156H0.5V0Z" fill="#CE1126" />
+                <path d="M0.5 15.9984H24.5V24H0.5V15.9984Z" fill="black" />
+                <path
+                  d="M7.15467 14.314C7.25142 14.314 7.32986 14.2356 7.32986 14.1388C7.32986 14.0421 7.25142 13.9636 7.15467 13.9636C7.05792 13.9636 6.97949 14.0421 6.97949 14.1388C6.97949 14.2356 7.05792 14.314 7.15467 14.314Z"
+                  fill="#007A3D" />
+              </g>
+              <defs>
+                <clipPath id="clip0_3_227">
+                  <rect x="0.5" width="24" height="24" rx="8" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+
+            <span (click)="changeCountry()">+20</span>
+
+            <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6.5 9L12.5 15L18.5 9" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+
+          </span>
+          <ion-input type="tel" formControlName="phone" clearOnEdit="false" #phone (keyup.enter)="setNextFocus('phone')"
+            placeholder="123 456-7890"></ion-input>
+        </ion-item>
+        <p class="error-msg"
+          *ngIf="registerForm.get('phone').touched && registerForm.get('phone').hasError('required')">
+          Phone number is invalid
+        </p>
+      </div>
+
+      <div class="form-item">
+        <ion-item lines="none">
+          <ion-input type="number" formControlName="experienceYears" clearOnEdit="false" #displayName
+            (keyup.enter)="setNextFocus('experienceYears')" placeholder="Years of experience..."></ion-input>
+        </ion-item>
+        <p class="error-msg"
+          *ngIf="registerForm.get('experienceYears').touched && registerForm.get('experienceYears').hasError('required')">
+          Experience years is required
+        </p>
+      </div>
+
+
+      <div class="form-item">
+        <ion-item lines="none">
+          <ion-input type="text" formControlName="selected_level" clearOnEdit="false"
+            placeholder="Choose experience Level"></ion-input>
+          <span slot="end" class="end-icon" (click)="selectLevel()">
+            <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6.5 9L12.5 15L18.5 9" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </span>
+          <div (click)="selectLevel()" class="overlay"></div>
+        </ion-item>
+      </div>
+
+      <div class="form-item">
+        <ion-item lines="none">
+          <ion-input type="text" formControlName="address" clearOnEdit="false" #displayName
+            (keyup.enter)="setNextFocus('address')" placeholder="Address..."></ion-input>
+        </ion-item>
+        <p class="error-msg"
+          *ngIf="registerForm.get('address').touched && registerForm.get('address').hasError('required')">
+          Address is required
+        </p>
+      </div>
+
+
+      <div class="form-item">
+        <ion-item lines="none">
+          <ion-input type="password" formControlName="password" #password (keyup.enter)="setNextFocus('password')"
+            clearOnEdit="false" placeholder="Password..." *ngIf="!showPassword"></ion-input>
+
+          <ion-input type="text" formControlName="password" #password (keyup.enter)="setNextFocus('confirm_password')"
+            clearOnEdit="false" placeholder="Password..." *ngIf="showPassword"></ion-input>
+
+          <span class="eye-icon">
+            <svg (click)="togglePassword()" width="25" height="24" viewBox="0 0 25 24" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path d="M2.5 12C2.5 12 5.5 5 12.5 5C19.5 5 22.5 12 22.5 12C22.5 12 19.5 19 12.5 19C5.5 19 2.5 12 2.5 12Z"
+                stroke="#BABABA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path
+                d="M12.5 15C14.1569 15 15.5 13.6569 15.5 12C15.5 10.3431 14.1569 9 12.5 9C10.8431 9 9.5 10.3431 9.5 12C9.5 13.6569 10.8431 15 12.5 15Z"
+                stroke="#BABABA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </span>
+        </ion-item>
+        <p class="error-msg"
+          *ngIf="registerForm.get('password').touched && registerForm.get('password').hasError('required')">
+          Password is required
+        </p>
+      </div>
+
+      <ion-button expand="block" class="primary-button" type="submit" [disabled]="!registerForm.valid">Sign
+        In</ion-button>
+      <ion-button class="login-btn" expand="block" (click)="login()">
+        Already have any account? <span>Sign in</span>
+      </ion-button>
+    </form>
+  </div>
+</ion-content>

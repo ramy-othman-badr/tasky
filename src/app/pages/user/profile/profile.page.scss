@@ -1,0 +1,30 @@
+.main-container {
+    ion-item {
+        --background: #F5F5F5;
+        margin-bottom: 15px;
+        --border-radius: 9px;
+        --padding-top: 10px;
+        --padding-bottom: 10px;
+
+        ion-label {
+            margin: 0px;
+
+            h2 {
+                margin: 0px;
+                color: #b0a7a7 !important;
+            }
+
+            p {
+                margin: 0px;
+                color: #2F2F2F !important;
+                font-weight: 700;
+                font-size: 1.2rem;
+                margin-top: 5px;
+            }
+        }
+
+        ion-buttons {
+            ion-button {}
+        }
+    }
+}
