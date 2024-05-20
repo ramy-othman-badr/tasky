@@ -222,3 +222,24 @@ ion-header {
 .high-priority .task-priority {
     color: #FF7D53 !important;
 }
+
+ion-popover {
+    --width: 100px;
+
+    ion-button {
+        --background: transparent !important;
+        color: #000;
+        margin: 0px;
+        border-bottom: 1px solid #e0e0e0;
+        --padding-start: 0px !important;
+        --background-activated: transparent;
+
+        &:last-child {
+            border-bottom: none !important;
+        }
+    }
+
+    .delete-btn {
+        color: #FF7D53;
+    }
+}

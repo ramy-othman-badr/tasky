@@ -10,13 +10,14 @@
           </svg>
         </ion-button>
       </ion-buttons>
-      <ion-title>Add new task</ion-title>
+      <ion-title *ngIf="!taskDetails">Add new task</ion-title>
+      <ion-title *ngIf="taskDetails">Edit task</ion-title>
     </ion-toolbar>
   </ion-header>
 
 
   <div class="ion-padding">
-    <form [formGroup]="taskDetailsForm" (ngSubmit)="addTask()" class="themed-form">
+    <form [formGroup]="taskDetailsForm" (ngSubmit)="taskOptions()" class="themed-form">
 
       <div class="form-item" (click)="selectImage()">
         <div class="image">
@@ -122,7 +123,8 @@
       </div>
 
       <ion-button class="primary-button" expand="block" type="submit" [disabled]="!taskDetailsForm.valid">
-        <ion-label>Add task</ion-label>
+        <ion-label *ngIf="!taskDetails">Add task</ion-label>
+        <ion-label *ngIf="taskDetails">Edit task</ion-label>
       </ion-button>
     </form>
   </div>

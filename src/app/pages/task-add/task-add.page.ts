@@ -18,6 +18,8 @@ import { HttpHeaders } from '@angular/common/http';
 })
 export class TaskAddPage implements OnInit {
 
+  taskDetails
+
   taskDetailsForm: FormGroup;
 
   constructor(public initService: InitService, private formBuilder: FormBuilder) { }
@@ -31,6 +33,16 @@ export class TaskAddPage implements OnInit {
       priority: ['', [Validators.required]],
       dueDate: ['', [Validators.required]],
     });
+
+    if (this.taskDetails) {
+      this.taskDetailsForm.get('image').setValue(this.taskDetails.image)
+      this.taskDetailsForm.get('title').setValue(this.taskDetails.title)
+      this.taskDetailsForm.get('desc').setValue(this.taskDetails.desc)
+      this.taskDetailsForm.get('selected_priority').setValue(this.taskDetails.priority)
+      this.taskDetailsForm.get('priority').setValue(this.taskDetails.priority)
+      this.taskDetailsForm.get('dueDate').setValue(this.taskDetails.createdAt.split('T')[0])
+    }
+
   }
 
   dismissModal() {
@@ -63,19 +75,19 @@ export class TaskAddPage implements OnInit {
   base64ToBlob(base64, contentType = '', sliceSize = 512) {
     const byteCharacters = atob(base64.split(',')[1]);
     const byteArrays = [];
-  
+
     for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
       const slice = byteCharacters.slice(offset, offset + sliceSize);
-  
+
       const byteNumbers = new Array(slice.length);
       for (let i = 0; i < slice.length; i++) {
         byteNumbers[i] = slice.charCodeAt(i);
       }
-  
+
       const byteArray = new Uint8Array(byteNumbers);
       byteArrays.push(byteArray);
     }
-  
+
     const blob = new Blob(byteArrays, { type: contentType });
     return blob;
   }
@@ -92,6 +104,7 @@ export class TaskAddPage implements OnInit {
       }),
     };
 
+    await this.initService.presentLoading()
     this.initService.httpService.http
       .post(
         this.initService.httpService.url + 'upload/image',
@@ -100,9 +113,11 @@ export class TaskAddPage implements OnInit {
       )
       .subscribe(
         (response: any) => {
+          this.initService.loading.dismiss()
           this.taskDetailsForm.get('image').setValue(response.image)
         },
         (error) => {
+          this.initService.loading.dismiss()
         }
       );
   }
@@ -139,6 +154,7 @@ export class TaskAddPage implements OnInit {
       ios: {
         format: 'dd/MM/yyyy',
       },
+      locale: 'en-US'
     }
 
     if (this.taskDetailsForm.get('dueDate').value) {
@@ -155,6 +171,37 @@ export class TaskAddPage implements OnInit {
       const dateOnlyString = dateObj.toISOString().split('T')[0];
       this.taskDetailsForm.get('dueDate').setValue(dateOnlyString)
     })
+  }
+
+  taskOptions() {
+    if (this.taskDetailsForm.valid) {
+      if (this.taskDetails) {
+        this.editTask()
+      } else {
+        this.addTask()
+      }
+    }
+  }
+
+
+  async editTask(no_loading?) {
+    if (this.taskDetailsForm.valid) {
+      if (!no_loading) {
+        await this.initService.presentLoading()
+      }
+      this.initService.httpService.putRequest(`todos/${this.taskDetails._id}`, this.taskDetailsForm.value).then((response: any) => {
+        this.initService.modalController.dismiss({ edited: true })
+        this.initService.publishSomeData('tasks_changed')
+        this.initService.loading.dismiss()
+      }).catch((err) => {
+        console.log(err)
+        if (err.status == 401) {
+          this.initService.refreshToken().then(() => {
+            this.editTask(true);
+          })
+        }
+      })
+    }
   }
 
 

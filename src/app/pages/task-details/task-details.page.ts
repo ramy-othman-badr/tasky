@@ -67,30 +67,29 @@ export class TaskDetailsPage implements OnInit {
 
 
   async editTask() {
-    /*     let modal = await this.initService.modalController.create({
-          component: TaskAddPage,
-          componentProps: {
-            taskDetails: this.taskDetails,
-          },
-          breakpoints: [1],
-          initialBreakpoint: 1,
-        });
-        modal.onDidDismiss().then((data) => {
-          if (data.data && data.data?.edited) {
-            this.getTaskDetails()
-          }
-        });
-        modal.present(); */
-    this.initService.presentToast('not work yet', 'danger')
     this.isOpen = false
+    let modal = await this.initService.modalController.create({
+      component: TaskAddPage,
+      componentProps: {
+        taskDetails: this.taskDetails,
+      },
+      breakpoints: [1],
+      initialBreakpoint: 1,
+    });
+    modal.onDidDismiss().then((data) => {
+      if (data.data && data.data?.edited) {
+        this.getTaskDetails()
+      }
+    });
+    modal.present();
   }
 
   async deleteTask(no_loading?) {
+    this.isOpen = false
     if (!no_loading) {
       await this.initService.presentLoading()
     }
     this.initService.httpService.deleteRequest(`todos/${this.taskID}`).then((response: any) => {
-      this.isOpen = false
       this.initService.loading.dismiss()
       this.initService.navCtrl.pop()
       this.initService.publishSomeData('tasks_changed')

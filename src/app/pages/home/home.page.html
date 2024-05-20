@@ -161,6 +161,25 @@
   </div>
 
 
+  
+  <ion-popover mode="ios" #popover [isOpen]="isOpen" (didDismiss)="isOpen = false">
+    <ng-template>
+      <ion-content class="ion-padding">
+        <ion-button expand="block" (click)="editTask()">
+          <ion-label>
+            Edit
+          </ion-label>
+        </ion-button>
+        <ion-button class="delete-btn" expand="block" (click)="deleteTask()">
+          <ion-label>
+            Delete
+          </ion-label>
+        </ion-button>
+      </ion-content>
+    </ng-template>
+  </ion-popover>
+  
+
 </ion-content>
 
 <div class="footer-buttons">

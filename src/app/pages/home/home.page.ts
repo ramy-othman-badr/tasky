@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { InitService, QrcodeService } from 'src/app/services';
 import { TaskAddPage } from '../task-add/task-add.page';
 import { LogoutComponent } from 'src/app/components/user/logout/logout.component';
@@ -22,11 +22,17 @@ export class HomePage implements OnInit {
   loading = true
   loading_array = [1, 1, 1, 1, 1, 1, 1, 1]
   filter = {
-    page: 1
+    page: 1,
+    status: this.segment_value
   }
   items = []
 
   tasks_events
+
+  
+  @ViewChild('popover') popover;
+  isOpen = false;
+  taskDetails
 
   constructor(public initService: InitService, public qrcodeService: QrcodeService) {
     this.tasks_events = this.initService.getObservable().subscribe((data) => {
@@ -61,6 +67,7 @@ export class HomePage implements OnInit {
   segmentsChange() {
     this.filter = {
       page: 1,
+      status: this.segment_value
     }
     this.getItems('refresh');
   }
@@ -72,6 +79,11 @@ export class HomePage implements OnInit {
       this.loading = true;
       this.items = [];
       this.filter.page = 1;
+    }
+    if (this.segment_value == 'all') {
+      delete(this.filter.status)
+    } else {
+      this.filter.status = this.segment_value
     }
     this.initService.httpService
       .getRequest('todos', this.filter)
@@ -114,7 +126,9 @@ export class HomePage implements OnInit {
 
   taskOptions(task, event) {
     event.stopPropagation()
-    this.initService.presentToast('not done yet', 'danger')
+    this.popover.event = event;
+    this.isOpen = true
+    this.taskDetails = task
   }
 
   scanQRCode() {
@@ -183,6 +197,47 @@ export class HomePage implements OnInit {
     }
     return text;
   }
+
+
+
+
+  
+  async editTask() {
+    this.isOpen = false
+    let modal = await this.initService.modalController.create({
+      component: TaskAddPage,
+      componentProps: {
+        taskDetails: this.taskDetails,
+      },
+      breakpoints: [1],
+      initialBreakpoint: 1,
+    });
+    modal.onDidDismiss().then((data) => {
+      if (data.data && data.data?.edited) {
+        this.getItems('refresh');
+      }
+    });
+    modal.present();
+  }
+
+  async deleteTask(no_loading?) {
+    this.isOpen = false
+    if (!no_loading) {
+      await this.initService.presentLoading()
+    }
+    this.initService.httpService.deleteRequest(`todos/${this.taskDetails._id}`).then((response: any) => {
+      this.initService.loading.dismiss()
+      this.initService.navCtrl.pop()
+      this.initService.publishSomeData('tasks_changed')
+    }).catch((err) => {
+      if (err.status == 401) {
+        this.initService.refreshToken().then(() => {
+          this.deleteTask(true);
+        })
+      }
+    })
+  }
+
 
 
 }
